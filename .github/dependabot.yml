@@ -1,3 +1,35 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '6.0.x'
+
+- script: dotnet build --configuration $(buildConfiguration)
+  displayName: 'Build Project'
+
+- script: dotnet publish --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)
+  displayName: 'Publish Artifacts'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: '<اسم الـ Service connection>'
+    appType: 'webApp'
+    appName: '<اسم الـ App Service>'
+    package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
 version: 2
 updates:
   # GitHub Actions
