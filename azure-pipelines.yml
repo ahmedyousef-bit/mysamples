@@ -1,4 +1,8 @@
 # ASP.NET
+- task: DotNetCoreCLI@2
+  inputs:
+    azureSubscription: 'Azure subscription 1(35fad6ec-5fdd-42e6-8e6c-a0e4cc90bd48)'
+    command: 'build'
 # Build and test ASP.NET projects.
 # Add steps that publish symbols, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
